@@ -1,16 +1,31 @@
 version: '3.3'
 services:
-  pg:
+  ms25-pg:
     container_name: ms25-db
-    image: postgres
+    image: mysql
     ports:
-      - "5439:5432"
+      - "3336:3306"
     volumes:
-      - db_data:/var/lib/postgresql
+      - my-datavolume:/var/lib/mysql
     environment:
-      POSTGRES_USER: ms25
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: ms25
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - ms25
+
+
+  adminer:
+    image: adminer
+    ports:
+      - "9090:8080"
+    networks:
+      - ms25
+
+
+
+
 
 volumes:
-  db_data: { }
+  my-datavolume:
+
+networks:
+  ms25:
