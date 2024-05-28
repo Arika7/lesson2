@@ -1,6 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5439/ms25
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3336
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+
+
