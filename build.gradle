@@ -5,12 +5,15 @@ plugins {
 }
 
 group = 'az.ingress'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.3-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
 }
 
+tasks.named("jar") {
+	enabled= false
+}
 repositories {
 	mavenCentral()
 }

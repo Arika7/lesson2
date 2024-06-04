@@ -1,6 +1,37 @@
 version: '3.3'
 services:
+  ms25-application:
+    hostname: ms25-application
+    image: lesson1:v1
+    ports:
+      - "8088:8081"
+    networks:
+      - ms25
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+    depends_on:
+      - ms25-pg
+
+  ms25-application2:
+    hostname: ms25-application2
+    image: lesson2:v1
+    ports:
+      - "8089:8081"
+    networks:
+      - ms25
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+    depends_on:
+      - ms25-pg
+
   ms25-pg:
+    hostname: db
     container_name: ms25-db
     image: mysql
     ports:
@@ -20,6 +51,21 @@ services:
     networks:
       - ms25
 
+  reverse_proxy:
+    image: nginx
+    hostname: proxy
+    container_name: reverse_proxy
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - ms25-application
+      - ms25-application2
+    networks:
+      - ms25
 
 
 
